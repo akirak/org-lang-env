@@ -1,0 +1,23 @@
+* org-lang-env-mode
+This minor mode switches =current-language-environment= according to a property of an Org entry being clocked in.
+It is useful for people who use =org-mode= for writing and work on multiple languages.
+** Configuration
+No configuration is necessary.
+You can turn on =org-lang-env-mode= in individual buffers (see usage).
+
+If you want to set the input method according to the language environment, you can use =set-language-info= function:
+
+#+begin_src emacs-lisp
+  (set-language-info "Japanese" 'input-method 'japanese-mozc)
+#+end_src
+** Usage
+Turn on =org-lang-env-mode= in Org buffers from which you want to switch the language environment.
+It enables a combination of =org-clock-in-hook= and =org-clock-out-hook=.
+When you clock in to an entry, the language environment is changed, and when you clock out, it is reverted to the default language.
+
+The language is determined from =language_environment= property of the entry.
+The property is inherited.
+You can use =org-lang-env-set= command to set the property.
+The command also adds a property line for turning on the mode, if the mode is not turned on.
+
+If you want to use the mode globally rather than turning on the mode in individual Org buffers, use =org-lang-env-global-mode=.
