@@ -35,16 +35,25 @@
 (defconst org-lang-env-prop-name "language_environment"
   "Name of the property.")
 
+(defcustom org-lang-env-verbose t
+  "Whether to log events for setting the language environment."
+  :type 'boolean)
+
 (defun org-lang-env-switch ()
   "Switch to the language environment according to property."
   (when-let (language (org-entry-get nil org-lang-env-prop-name t))
-    (set-language-environment language)))
+    (set-language-environment language)
+    (when org-lang-env-verbose
+      (message "org-lang-env: Set the language environment to %s" language))))
 
 (defun org-lang-env-restore ()
   "Switch back to the default language environment."
   (pcase (get 'current-language-environment 'standard-value)
     (`nil)
-    (`(,value) (set-language-environment (eval value)))))
+    (`(,value)
+     (set-language-environment (eval value))
+     (when org-lang-env-verbose
+       (message "org-lang-env: Restored the language environment")))))
 
 ;;;###autoload (autoload 'org-lang-env-mode "org-lang-env")
 (define-minor-mode org-lang-env-mode
