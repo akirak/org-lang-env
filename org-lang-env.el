@@ -49,6 +49,7 @@
 ;;;###autoload (autoload 'org-lang-env-mode "org-lang-env")
 (define-minor-mode org-lang-env-mode
   "Setting the language environment on clocking in."
+  :lighter " OrgLang"
   (if (bound-and-true-p org-lang-env-mode)
       (progn
         (add-hook 'org-clock-in-hook #'org-lang-env-switch nil t)
